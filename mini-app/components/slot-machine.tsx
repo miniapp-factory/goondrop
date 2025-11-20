@@ -31,15 +31,6 @@ export default function SlotMachine() {
 
     const timeout = setTimeout(() => {
       clearInterval(interval);
-      setSpinning(false);
-      const rows = grid;
-      const cols = Array.from({ length: 3 }, (_, c) => [
-        grid[0][c],
-        grid[1][c],
-        grid[2][c],
-      ]);
-      const hasRowWin = rows.some((row) => row.every((f) => f === row[0]));
-      const hasColWin = cols.some((col) => col.every((f) => f === col[0]));
     }, 2000);
 
     return () => {
