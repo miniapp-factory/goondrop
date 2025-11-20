@@ -15,7 +15,6 @@ export default function SlotMachine() {
     Array.from({ length: 3 }, () => Array(3).fill(randomFruit()))
   );
   const [spinning, setSpinning] = useState(false);
-  const [win, setWin] = useState(false);
 
   useEffect(() => {
     if (!spinning) return;
@@ -41,7 +40,6 @@ export default function SlotMachine() {
       ]);
       const hasRowWin = rows.some((row) => row.every((f) => f === row[0]));
       const hasColWin = cols.some((col) => col.every((f) => f === col[0]));
-      setWin(hasRowWin || hasColWin);
     }, 2000);
 
     return () => {
@@ -52,10 +50,16 @@ export default function SlotMachine() {
 
   const handleSpin = () => {
     if (spinning) return;
-    setWin(false);
     setSpinning(true);
   };
 
+  const hasRowWin = grid.some(row => row.every(f => f === row[0]));
+  const hasColWin = Array.from({ length: 3 }, (_, c) => [
+    grid[0][c],
+    grid[1][c],
+    grid[2][c],
+  ]).some(col => col.every(f => f === col[0]));
+  const win = !spinning && (hasRowWin || hasColWin);
   return (
     <div className="flex flex-col items-center gap-4">
       <div className="grid grid-cols-3 gap-2">
